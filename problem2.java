@@ -1,20 +1,25 @@
-import java.io.*;
 import java.util.*;
 
-class Arithmetic {
-    public int add(int a, int b) {
-        return a + b;
+class BiCycle {
+    String define_me() {
+        return "a vehicle with pedals.";
     }
 }
 
-class Adder extends Arithmetic {
+class MotorCycle extends BiCycle {
+    String define_me() {
+        return "a cycle with an engine.";
+    }
+
+    MotorCycle() {
+        System.out.println("Hello I am a motorcycle, I am " + define_me());
+        String temp = super.define_me();
+        System.out.println("My ancestor is a cycle who is " + temp);
+    }
 }
 
 public class Solution {
     public static void main(String[] args) {
-        Adder a = new Adder();
-        
-        System.out.println("My superclass is: " + a.getClass().getSuperclass().getName());    
-        System.out.print(a.add(10, 32) + " " + a.add(10, 3) + " " + a.add(10, 10) + "\n");
+        MotorCycle M = new MotorCycle();
     }
 }

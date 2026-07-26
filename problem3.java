@@ -1,68 +1,77 @@
+import java.io.*;
 import java.util.*;
 
-class Person {
-    protected String firstName;
-    protected String lastName;
-    protected int idNumber;
-    
-    Person(String firstName, String lastName, int identification) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.idNumber = identification;
-    }
-    
-    public void printPerson() {
-        System.out.println("Name: " + lastName + ", " + firstName + "\nID: " + idNumber);
+class Flower {
+    String whatsYourName() {
+        return "I have many names and types.";
     }
 }
 
-class Student extends Person {
-    private int[] testScores;
-
-    Student(String firstName, String lastName, int id, int[] scores) {
-        super(firstName, lastName, id);
-        this.testScores = scores;
+class Jasmine extends Flower {
+    @Override
+    String whatsYourName() {
+        return "Jasmine";
     }
+}
 
-    public char calculate() {
-        int sum = 0;
-        for (int score : testScores) {
-            sum += score;
-        }
-        
-        int average = testScores.length > 0 ? sum / testScores.length : 0;
+class Lily extends Flower {
+    @Override
+    String whatsYourName() {
+        return "Lily";
+    }
+}
 
-        if (average >= 90 && average <= 100) {
-            return 'O';
-        } else if (average >= 80) {
-            return 'E';
-        } else if (average >= 70) {
-            return 'A';
-        } else if (average >= 55) {
-            return 'P';
-        } else if (average >= 40) {
-            return 'D';
-        } else {
-            return 'T';
-        }
+class Lotus extends Flower {
+    @Override
+    String whatsYourName() {
+        return "Lotus";
+    }
+}
+
+class State {
+    Flower yourNationalFlower() {
+        return new Flower();
+    }
+}
+
+class WestBengal extends State {
+    @Override
+    Jasmine yourNationalFlower() {
+        return new Jasmine();
+    }
+}
+
+class Karnataka extends State {
+    @Override
+    Lotus yourNationalFlower() {
+        return new Lotus();
+    }
+}
+
+class AndhraPradesh extends State {
+    @Override
+    Lily yourNationalFlower() {
+        return new Lily();
     }
 }
 
 public class Solution {
-    public static void main(String[] args) {
-        Scanner scan = new Scanner(System.in);
-        String firstName = scan.next();
-        String lastName = scan.next();
-        int id = scan.nextInt();
-        int numScores = scan.nextInt();
-        int[] testScores = new int[numScores];
-        for (int i = 0; i < numScores; i++) {
-            testScores[i] = scan.nextInt();
+    public static void main(String[] args) throws IOException {
+        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+        String s = reader.readLine().trim();
+        State state = null;
+        switch (s) {
+            case "WestBengal":
+                state = new WestBengal();
+                break;
+            case "Karnataka":
+                state = new Karnataka();
+                break;
+            case "AndhraPradesh":
+                state = new AndhraPradesh();
+                break;
         }
-        scan.close();
-
-        Student s = new Student(firstName, lastName, id, testScores);
-        s.printPerson();
-        System.out.println("Grade: " + s.calculate());
+        Flower flower = state.yourNationalFlower();
+        System.out.println(flower.whatsYourName());
     }
 }
